@@ -1,4 +1,4 @@
-service: notes-api
+service: guitars-api
 
 # Create an optimized package for our functions
 package:
@@ -14,19 +14,19 @@ custom:
   # commands. Or falls back to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Name of the SST app that's deploying our infrastructure
-  sstApp: ${self:custom.stage}-notes-infra
+  sstApp: ${self:custom.stage}-guitars-infra
 
 provider:
   name: aws
   runtime: nodejs12.x
   stage: dev
-  region: us-east-1
+  region: us-east-2
 
   # These environment variables are made available to our functions
   # under process.env.
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
-    tableName: !ImportValue '${self:custom.sstApp}-TableName'
+    tableName: !ImportValue "${self:custom.sstApp}-TableName"
 
   iamRoleStatements:
     - Effect: Allow
@@ -41,11 +41,11 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - !ImportValue '${self:custom.sstApp}-TableArn'
+        - !ImportValue "${self:custom.sstApp}-TableArn"
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
-  # - path: url path is /notes
+  # - path: url path is /guitars
   # - method: POST request
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
@@ -54,55 +54,55 @@ functions:
     handler: create.main
     events:
       - http:
-          path: notes
+          path: guitars
           method: post
           cors: true
           authorizer: aws_iam
 
   get:
     # Defines an HTTP API endpoint that calls the main function in get.js
-    # - path: url path is /notes/{id}
+    # - path: url path is /guitars/{id}
     # - method: GET request
     handler: get.main
     events:
       - http:
-          path: notes/{id}
+          path: guitars/{id}
           method: get
           cors: true
           authorizer: aws_iam
 
   list:
     # Defines an HTTP API endpoint that calls the main function in list.js
-    # - path: url path is /notes
+    # - path: url path is /guitars
     # - method: GET request
     handler: list.main
     events:
       - http:
-          path: notes
+          path: guitars
           method: get
           cors: true
           authorizer: aws_iam
 
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
-    # - path: url path is /notes/{id}
+    # - path: url path is /guitars/{id}
     # - method: PUT request
     handler: update.main
     events:
       - http:
-          path: notes/{id}
+          path: guitars/{id}
           method: put
           cors: true
           authorizer: aws_iam
 
   delete:
     # Defines an HTTP API endpoint that calls the main function in delete.js
-    # - path: url path is /notes/{id}
+    # - path: url path is /guitars/{id}
     # - method: DELETE request
     handler: delete.main
     events:
       - http:
-          path: notes/{id}
+          path: guitars/{id}
           method: delete
           cors: true
           authorizer: aws_iam
