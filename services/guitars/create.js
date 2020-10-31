@@ -13,7 +13,7 @@ export const main = handler(async (event, context) => {
       title: data.title,
       description: data.description,
       url: data.url,
-      votes: data.votes,
+      votes: data.votes ?? 0,
       attachment: data.attachment,
       createdAt: Date.now(),
       isActive: true,
