@@ -15,7 +15,7 @@ export default class DynamoDBStack extends sst.Stack {
     });
 
     table.addGlobalSecondaryIndex({
-      indexName: "VotesIndex",
+      indexName: "VoteIndex",
       partitionKey: { name: "guitarId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "votes", type: dynamodb.AttributeType.STRING },
       projectionType: "INCLUDE",
