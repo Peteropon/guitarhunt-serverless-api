@@ -27,6 +27,7 @@ provider:
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
     tableName: !ImportValue "${self:custom.sstApp}-TableName"
+    indexName: !ImportValue "${self:custom.sstApp}-IndexName"
 
   iamRoleStatements:
     - Effect: Allow
@@ -116,6 +117,15 @@ functions:
       - http:
           path: billing
           method: post
+          cors: true
+          authorizer: aws_iam
+
+  rating:
+    handler: ratedList.main
+    events:
+      - http:
+          path: rating
+          method: get
           cors: true
           authorizer: aws_iam
 
