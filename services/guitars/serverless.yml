@@ -27,7 +27,6 @@ provider:
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
     tableName: !ImportValue "${self:custom.sstApp}-TableName"
-    indexName: !ImportValue "${self:custom.sstApp}-IndexName"
 
   iamRoleStatements:
     - Effect: Allow

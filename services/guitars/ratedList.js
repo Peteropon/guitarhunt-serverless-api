@@ -10,7 +10,7 @@ export const main = handler(async (event, context) => {
     // 'ExpressionAttributeValues' defines the value in the condition
     // - ':userId': defines 'userId' to be Identity Pool identity id
     //   of the authenticated user
-    IndexName: process.env.indexName,
+    IndexName: "VoteIndex",
     ScanIndexForward: false,
   };
 
